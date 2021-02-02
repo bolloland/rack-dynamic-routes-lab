@@ -10,17 +10,17 @@ class Application
 
         if req.path.match(/items/)
             #binding.pry
-            @@items.map do |item|
-                i = req.path.split("/items/").last #=> "Figs"
-                # binding.pry
-                if item =@@items.find{|item_from_array| item_from_array.name == i}
-                    resp.write item.price
-                else 
-                    resp.status = 400
-                    resp.write "Item not found"
-                    
-                end
+            i = req.path.split("/items/").last #=> "Figs"
+            item =@@items.find{|item_from_array| item_from_array.name == i}
+            # binding.pry
+            if !!item
+                resp.write item.price
+            else 
+                resp.status = 400
+                resp.write "Item not found"
+                
             end
+            
                 
         else
             resp.status = 404
